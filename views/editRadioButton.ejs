@@ -1,0 +1,58 @@
+<html>
+    <head>
+          <link rel="stylesheet" href="/css/editRadioButton.css">
+    </head>
+    <body>
+            <div class ="navbar">
+                    <div class = "navbar__left">
+        
+                         <div class = "navbar__left__brand" >
+                            <img src = "/images/form.svg" width = "30" height = "30"> 
+                           <div class = "navbar__left__brand__text"> MyForm</div>
+                         </div>
+                    </div>
+                    <div class = "navbar__right">
+                            <!-- <div class = "navbar__right__ele" >
+                               <form action = "/login" method = "GET"><button>Login</button></form>   
+                            </div>-->
+                            <div class = "navbar__right__ele" >
+                                    <form action = "/form/<%= formid %>/edit" method = "GET"><button>Back to form</button></form>   
+                            </div> 
+                            <div class = "navbar__right__ele" >
+                                <form action = "/logout" method = "POST"><button>Logout</button></form>   
+                            </div>
+                    </div>
+                </div>
+        <div class = "edit__options">
+         <div class = "title">Edit Multi choice options</div>
+ 
+         <form class = "edit_form" action = "/form/<%= formid %>/radio/<%= foundField._id %>?_method=put" method="POST">
+                <input type = "text" value = "<%= foundField.label %>" name = "label">
+
+                <% for(var i = 0;i < foundField.options.length;i++){ %>
+                    
+                    <div class = "row">
+                       <input name = "option<%= i %>" type = "text" value = "<%= foundField.options[i] %>">
+                       <button form = "form<%= i %>"><img  width = "10" height = "10" src = "/images/cancel.svg"></button>
+                    </div>
+                <% } %>
+                <div class = "button_set">
+                        <button form ="newrow">Add field</button>
+                        <button>Submit changes</button>
+                </div>
+       
+        </form>
+ 
+        <div style = "display: none" class = "hiddenforms">
+                <% for(var i = 0;i < foundField.options.length;i++){ %>
+                    
+                  <form id = "form<%= i %>" method="POST" action = "/form/<%= formid %>/radio/<%= foundField._id %>/delete/:i">
+                  </form>
+                <% } %>
+        </div>
+       </div> 
+       <form id = "newrow" style = "display:none" action = "/form/<%= formid %>/radio/<%= foundField._id %>/add" method = "POST">
+       </form>
+ 
+    </body>
+</html>

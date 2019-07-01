@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <!-- <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"> -->
+        <link rel="stylesheet" href="/css/explore.css">
+    </head>
+
+    <body>
+        
+        <div class ="navbar">
+            <div class = "navbar__left">
+
+                 <div class = "navbar__left__brand" >
+                    <img src = "/images/form.svg" width = "30" height = "30"> 
+                   <div class = "navbar__left__brand__text"> MyForm</div>
+                 </div>
+            </div>
+            <div class = "navbar__right">
+ 
+                    <div class = "navbar__right__ele" >
+                            <form action = "/dashboard" method = "GET"><button>Dashboard</button></form>   
+                    </div> 
+                    <div class = "navbar__right__ele" >
+                        <form action = "/logout" method = "POST"><button>Logout</button></form>   
+                    </div>
+            </div>
+        </div>
+
+        
+
+       <div class = "availableForms__text">
+           All Forms
+       </div>
+     
+        <div class = "availableForms">
+            
+          
+            <% forms.forEach((form) =>{ %>
+              <div class = "availableForms__block"> 
+                <form method = "GET" action = "/form/<%= form._id %>/response">
+                    <button><img src = "/images/form.svg" width = "150" height = "150"></button> 
+                </form>
+                <div class = "availableForms__block__text">
+                    <%= form.title %>
+                </div>
+              </div>    
+            <% }); %>
+        </div>
+        <hr>
+        <div class="trending__text">
+            Trending
+        </div>
+        <div class = "trending">
+
+          <%  if(trending){ %>
+            <% trending.forEach((tre) =>{ %>
+                <div class = "availableForms__block"> 
+                  <form method = "GET" action = "/form/<%= tre._id %>/response">
+                      <button><img src = "/images/form.svg" width = "150" height = "150"></button> 
+                  </form>
+                  <div class = "availableForms__block__text">
+                      <%= tre.title %>
+                  </div>
+                </div>    
+              <% }); %>
+          <%  } %>
+        </div>
+    </body>
+</html>

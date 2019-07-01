@@ -1,0 +1,272 @@
+
+/* Navbar css */
+.navbar
+{
+    overflow: overlay;
+    width: 100vw;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    -webkit-box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+     box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+
+}
+.navbar__left
+{
+    float: left;
+}
+
+.navbar__left__brand
+{
+    font-size: 20px;
+    margin-left: 100%;
+    margin-top: 10px;
+ 
+    color: #5f6368;
+    display: flex;
+}    
+.navbar__left__brand__text
+{
+    margin-top: 2px;
+    margin-left:5px; 
+}
+.navbar__right
+{
+    float: right;
+    display: flex;
+    margin-right: 10%;
+}
+.navbar__right__ele>form
+{
+    margin-top: 0.3em;
+}
+.navbar__right__ele
+{
+  
+   margin-right: 20px;
+   margin-top: 10px;
+
+
+   -webkit-transition: border 0.2s; /* For Safari 3.1 to 6.0 */
+   transition: border 0.2s;
+}
+
+.navbar__right__ele:hover
+{
+    
+    border:3px solid #9b59b6;  
+}
+
+.navbar__right__ele>a
+{
+    text-decoration: none;
+    color:black;
+}
+.navbar__right__ele>form>button
+{
+    background-color:white;
+    border:none;
+    font-size:16px;  
+}
+.navbar__right__ele>form>button:focus
+{
+    outline: 0;
+}
+
+.form
+{   
+    min-width: 500px;
+    display: flex;
+    flex-direction: column;
+    width:40%;
+    margin-top: 200px; 
+    -webkit-box-shadow: -1px 3px 21px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 3px 21px 0px rgba(0,0,0,0.75);
+    box-shadow: -1px 3px 21px 0px rgba(0,0,0,0.75);
+}
+
+.form>input:focus
+{
+    outline: 0;
+    border-bottom:2px solid #9b59b6; 
+}
+body
+{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+.form__title
+{
+    font-size: 30px;
+    margin-left: 20px;
+    margin-top: 50px;
+    margin-bottom: 40px;
+    border:none; 
+ 
+}
+.response-tab__buttonset
+{
+    display: flex;
+    margin-left: 20px;
+}
+.response-tab__buttonset>form:first-child>button
+{
+     height: 40px;
+     background-color: #9b59b6;
+     border: none;
+     color: white;
+     font-size: 18px;
+}
+.response-tab__buttonset>form:last-child>button
+{
+     height: 40px;
+     background-color: white;
+     border:1px solid #9b59b6;
+     font-size: 18px;
+    
+}
+.radio_button_option
+{
+    display: flex;
+}
+.form__description
+{
+       border: none;
+       font-size: 16px;
+       margin-left: 20px;
+       margin-bottom: 40px;
+}
+
+.form__text__question
+{
+    border: none;
+        font-size: 20px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.form__text__answer::placeholder
+{
+    color:#ccc;
+}
+.form__text__answer
+{
+    width:40%;
+    height:20px;
+    border:none;
+    font-size: 18px;
+    border-bottom: 1px dashed #eee ;
+    margin-left: 20px;
+    margin-bottom: 40px;
+   
+}
+
+
+.form__button
+{
+    background-color: #9b59b6;
+    color:white;
+    height:40px;
+    font-size: 16px;
+    margin-left: 20px;
+    width:100px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+}
+.radio_button_option
+{
+    padding-left: 20px;
+}
+.radio_button_option>input
+{
+    padding-left: 0;
+    margin-left: 0;
+}
+form>div>img
+{
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.toggle-responses
+{
+    display: flex;
+   margin-left: 10px;
+    padding-top:5px; 
+}
+.toggle-responses>form>button{
+    background-color: white;
+    border: none;
+}
+.response-tab
+{
+    padding-top: 30px;
+    padding-left: 30px;
+    border-bottom:1px solid #ccc;
+    padding-bottom: 30px;
+    display: flex;
+
+}
+.response-tab__header
+{
+
+}
+.response-tab__header
+{
+    font-size: 20px;
+}
+
+.form-choose
+{
+    display: flex;
+    padding-left: 30%;
+    border-bottom:1px solid #ccc; 
+    height: 52px;
+
+}
+.form-choose > form
+{
+    margin-right: 10px;
+}
+.form-choose > form> button
+{
+    border:none;
+    color:rgba(0,0,0,0.5);
+    background-color: white;
+    font-size: 20px;
+    height: 52px;
+    padding-top: 10px;
+}
+.form-choose > form:first-child> button
+{
+    
+}
+.form-choose > form:last-child> button
+{
+    color: #9b59b6;
+    border-bottom: 1px solid #9b59b6;
+
+}
+
+.flash-message
+{
+  margin-left:650px;
+  font-size: 24px;
+  background-color:rgb(237, 134, 132);
+  color:white;
+  text-align: center;
+  border-radius:10px;
+  width:400px;
+  margin-top: 50px;
+} 
+
+@media only screen and (min-width:1300px)
+{
+    .form{
+        margin-left:30%;
+    }
+}

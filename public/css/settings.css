@@ -1,0 +1,155 @@
+
+/* Navbar css */
+.navbar
+{
+    overflow: overlay;
+    width: 100vw;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    -webkit-box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+     box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+
+}
+.navbar__left
+{
+    float: left;
+}
+
+.navbar__left__brand
+{
+    font-size: 20px;
+    margin-left: 100%;
+    margin-top: 10px;
+ 
+    color: #5f6368;
+    display: flex;
+}    
+.navbar__left__brand__text
+{
+    margin-top: 2px;
+    margin-left:5px; 
+}
+.navbar__right
+{
+    float: right;
+    display: flex;
+    margin-right: 10%;
+}
+.navbar__right__ele>form
+{
+    margin-top: 0.3em;
+}
+.navbar__right__ele
+{
+  
+   margin-right: 20px;
+   margin-top: 10px;
+
+
+   -webkit-transition: border 0.2s; /* For Safari 3.1 to 6.0 */
+   transition: border 0.2s;
+}
+
+.navbar__right__ele:hover
+{
+    
+    border:3px solid #9b59b6;  
+}
+
+.navbar__right__ele>a
+{
+    text-decoration: none;
+    color:black;
+}
+.navbar__right__ele>form>button
+{
+    background-color:white;
+    border:none;
+    font-size:16px;  
+}
+.navbar__right__ele>form>button:focus
+{
+    outline: 0;
+}
+
+
+
+body
+{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.settings
+{
+    margin-left: 30%;
+    margin-top: 100px;
+    -webkit-box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+     box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+     width:15%;
+     padding: 40px;
+}
+.share
+{
+    margin-left: 30%;
+    margin-top: 40px;
+}
+.settings-form-date
+{
+    margin-bottom: 10px;
+}
+.settings-form-res
+{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.form__button2
+{
+    background-color: #2980b9;
+    color:white;
+    height:40px;
+    font-size: 16px;
+    margin-left: 40px;
+    width:100px;
+    border-radius: 5px;
+    align-self: flex-start;
+    border: none;
+}
+input
+{
+    margin-bottom: 10px;
+}
+.settings__header
+{
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+.share__text
+{
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.sidebar-generatedLink
+{
+    display: flex;
+    margin-left: 30%;
+    margin-top: 10px;
+}
+.sidebar-generatedLink__url
+{
+    border-radius: 4px;
+    border: 1px solid black;
+    font-size: 18px;
+    padding: 4px;
+}
+.sidebar-generatedLink__text
+{
+    font-size: 18px;padding-top: 4px;
+    padding-right: 5px;
+}

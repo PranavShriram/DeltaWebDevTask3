@@ -1,0 +1,272 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/formEdit.css">
+    </head>
+    <body> 
+         
+        <div class ="navbar">
+            <div class = "navbar__left">
+
+                 <div class = "navbar__left__brand" >
+                    <img src = "/images/form.svg" width = "30" height = "30"> 
+                   <div class = "navbar__left__brand__text"> MyForm</div>
+                 </div>
+            </div>
+            <div class = "navbar__right">
+                    <!-- <div class = "navbar__right__ele" >
+                       <form action = "/login" method = "GET"><button>Login</button></form>   
+                    </div>
+                    <div class = "navbar__right__ele" >
+                            <form action = "/register" method = "GET"><button>Register</button></form>   
+                    </div> -->
+                 
+                    <div class = "navbar__right__ele" >
+                        <form action = "/settings/<%= form._id %>" method = "GET"><button>Settings</button></form>   
+                     </div>
+                     <div class = "navbar__right__ele" >
+                        <form action = "/logout" method = "POST"><button>Logout</button></form>   
+                    </div>
+            </div>
+        </div>
+     
+<div style = "display: none" class = "settings-form">
+   
+</div>           
+
+           
+<div class = "disp_row"> 
+   
+             
+   
+   <div class = "form">
+        <div class = "form-choose">
+            <form method = "GET" action = "/form/<%= form._id %>/edit"> 
+              <button>Questions</button>
+              </form>
+          <form method = "GET" action = "/form/<%= form._id %>/viewresponse/1"> 
+           <button>Responses</button>
+           </form>
+        </div>  
+        <form  method = "POST" action="/form/<%= form._id %>?_method=PUT">
+           <div class = "main">
+              <input id = "title"   class = "form__title" type = "text" value = "<%= form.title %>" name = "title">
+              <input id = "desc"  class = "form__description" type = "text" value = "<%= form.description %>" name = "description">
+           </div> 
+   
+          <% populatedFields.forEach((populatedField) => { %>
+       
+            <div class = "field">
+                <%  if(populatedField.typeOfInput == "text"){ %>
+                  <div class = "row">
+
+                      <% if(populatedField.label == "Untitled"){ %>
+                        <input id = "input<%= populatedField.position %>"  class = "form__text__question" type = "text" placeholder = "Question" name = "<%= populatedField.position %>label">
+                       
+                      <% } else { %>
+                     
+                        <input id = "input<%= populatedField.position %>"   class = "form__text__question" type = "text" value = "<%= populatedField.label %>" name = "<%= populatedField.position %>label">
+                                          
+ 
+                      <% } %>
+                      <button form = "delete<%= populatedField._id %>" class = "deletefieldbutton">
+                          <img width = "10" height = "10" src = "/images/cancel.svg">
+                       </button>
+                  </div>   
+                     <div class = "row2">
+                       <div class = "form__text__answer" >Short Answer Text</div>
+                       <div class = "required">
+                          <% if( populatedField.required ){ %>
+                           Required <input name = "check<%= populatedField.position %>" type = "checkbox" checked >
+                          <% }else {%>
+                            Required <input name = "check<%= populatedField.position %>" type = "checkbox" >
+                          <%  } %>
+                        </div>
+                     </div>
+                <%  } else if(populatedField.typeOfInput == "number") {%>
+                      <div class = "row">
+                          <% if(populatedField.label == "Untitled"){ %>
+                            <input id = "input<%= populatedField.position %>"   class = "form__text__question" type = "text" placeholder = "Question" name = "<%= populatedField.position %>label">
+                          
+                            <% } else { %>
+                            <input id = "input<%= populatedField.position %>"  class = "form__text__question" type = "text" value = "<%= populatedField.label %>" name = "<%= populatedField.position %>label">
+                            
+                            <% } %>
+                          <button form = "delete<%= populatedField._id %>" class = "deletefieldbutton">
+                              <img width = "10" height = "10" src = "/images/cancel.svg">
+                           </button>
+                        
+                        </div>
+                        <div class = "row2">
+                          <div class = "form__text__answer" >Number Answer type</div>
+                          <div class = "required">
+                              <% if( populatedField.required ){ %>
+                               Required <input name = "check<%= populatedField.position %>" type = "checkbox" checked >
+                              <% }else { %>
+                                Required <input name = "check<%= populatedField.position %>" type = "checkbox" >
+                              <%  } %>
+                            </div>
+                        </div>  
+                <%  } else if(populatedField.typeOfInput == "radio"){ %>
+                  <div class = "row">
+                      <% if(populatedField.label == "Untitled"){ %>
+                        <input id = "input<%= populatedField.position %>"   class = "form__text__question" type = "text" placeholder = "Question" name = "<%= populatedField.position %>label">
+                      
+                        <% } else { %>
+                        <input id = "input<%= populatedField.position %>""  class = "form__text__question" type = "text" value = "<%= populatedField.label %>" name = "<%= populatedField.position %>label">
+                        
+                      <% } %>
+                      <button form = "delete<%= populatedField._id %>" class = "deletefieldbutton">
+                          <img width = "10" height = "10" src = "/images/cancel.svg">
+                       </button>
+                  </div>
+                  <div class = "row2">
+                    <div class = "form__text__answer row2div" >Radio type</div>
+                    <button form = "radioform<%= populatedField._id %>"  class = "form__button2">Edit Options</button>
+                    <div class = "required">
+                      <% if( populatedField.required ){ %>
+                       Required <input name = "check<%= populatedField.position %>" type = "checkbox" checked >
+                      <% }else { %>
+                        Required <input name = "check<%= populatedField.position %>" type = "checkbox" >
+                      <%  } %>
+                    </div>
+                  </div>    
+                <%  }  else if(populatedField.typeOfInput == "image"){ %>
+                     
+                  <div class = "row">
+                      <% if(populatedField.label == "Untitled"){ %>
+                        <input   id = "input<%= populatedField.position %>"   class = "form__text__question" type = "text" placeholder = "Question" name = "<%= populatedField.position %>label">
+                      
+                        <% } else { %>
+                        <input   id = "input<%= populatedField.position %>""  class = "form__text__question" type = "text" value = "<%= populatedField.label %>" name = "<%= populatedField.position %>label">
+                        
+                      <% } %>
+                      <button form = "delete<%= populatedField._id %>" class = "deletefieldbutton">
+                          <img width = "10" height = "10" src = "/images/cancel.svg">
+                      </button>
+                  </div>
+                  <div class = "row2">
+                    <div class = "form__text__answer row2div" >Image type</div>
+                    <div class = "required">
+                        <% if( populatedField.required ){ %>
+                         Required <input name = "check<%= populatedField.position %>" type = "checkbox" checked >
+                        <% }else { %>
+                          Required <input name = "check<%= populatedField.position %>" type = "checkbox" >
+                        <%  } %>
+                      </div>
+                  </div> 
+
+                <% } else if(populatedField.typeOfInput == "check"){%>
+                 
+                  <div class = "row">
+                      <% if(populatedField.label == "Untitled"){ %>
+                        <input id = "input<%= populatedField.position %>"   class = "form__text__question" type = "text" placeholder = "Question" name = "<%= populatedField.position %>label">
+                      
+                        <% } else { %>
+                        <input id = "input<%= populatedField.position %>""  class = "form__text__question" type = "text" value = "<%= populatedField.label %>" name = "<%= populatedField.position %>label">
+                        
+                      <% } %>
+                      <button form = "delete<%= populatedField._id %>" class = "deletefieldbutton">
+                          <img width = "10" height = "10" src = "/images/cancel.svg">
+                       </button>
+                  </div>
+                  <div class = "row2">
+                    <div class = "form__text__answer row2div" >Checkbox type</div>
+                    <button form = "checkform<%= populatedField._id %>"  class = "form__button2">Edit Options</button>
+                    <!-- <div class = "required">
+                      <% if( populatedField.required ){ %>
+                       Required <input name = "check<%= populatedField.position %>" type = "checkbox" checked >
+                      <% }else { %>
+                        Required <input name = "check<%= populatedField.position %>" type = "checkbox" >
+                      <%  } %>
+                    </div> -->
+                  </div> 
+                <%  } else if(populatedField.typeOfInput == "pdf"){ %>
+                     
+                  <div class = "row">
+                      <% if(populatedField.label == "Untitled"){ %>
+                        <input   id = "input<%= populatedField.position %>"   class = "form__text__question" type = "text" placeholder = "Question" name = "<%= populatedField.position %>label">
+                      
+                        <% } else { %>
+                        <input   id = "input<%= populatedField.position %>""  class = "form__text__question" type = "text" value = "<%= populatedField.label %>" name = "<%= populatedField.position %>label">
+                        
+                      <% } %>
+                      <button form = "delete<%= populatedField._id %>" class = "deletefieldbutton">
+                          <img width = "10" height = "10" src = "/images/cancel.svg">
+                      </button>
+                  </div>
+                  <div class = "row2">
+                    <div class = "form__text__answer row2div" >PDF type</div>
+                    <div class = "required">
+                        <% if( populatedField.required ){ %>
+                         Required <input name = "check<%= populatedField.position %>" type = "checkbox" checked >
+                        <% }else { %>
+                          Required <input name = "check<%= populatedField.position %>" type = "checkbox" >
+                        <%  } %>
+                      </div>
+                  </div> 
+
+                <% } %>
+                </div>  
+            
+             
+            <%  }) %>
+             <button class = "form__button">Confirm Edit</button>
+           </form>
+   </div>
+           <div class = "form-sticky">
+              <form class = "add-field tooltip" method = "POST" action="/form/<%= form._id %>/field">
+                  <input type = "hidden" name = "type" value = "text">
+                  <button class = "add-field__button"><img src = "/images/paragraph.svg" width = "30" height = "30"><span class = "tooltiptext" >Text field</span></button>         
+              </form>
+              <form class = "add-field tooltip" method = "POST" action="/form/<%= form._id %>/field">
+                <input type = "hidden" name = "type" value = "number">
+                <button class = "add-field__button"><img src = "/images/number.svg" width = "30" height = "30"><span class = "tooltiptext" >Number Field</span></button>         
+             </form>
+             <form class = "add-field tooltip" method = "POST" action="/form/<%= form._id %>/field">
+              <input type = "hidden" name = "type" value = "radio">
+              <button class = "add-field__button "><img src = "/images/radio.svg" width = "30" height = "30"><span class = "tooltiptext" >Radio Button Set</span></button>         
+             </form>
+             <form class = "add-field tooltip" method = "POST" action="/form/<%= form._id %>/field">
+              <input type = "hidden" name = "type" value = "check">
+              <button class = "add-field__button "><img src = "/images/check.svg" width = "30" height = "30"><span class = "tooltiptext" >Check box set</span></button>         
+             </form>
+             <form class = "add-field tooltip" method = "POST" action="/form/<%= form._id %>/field">
+              <input type = "hidden" name = "type" value = "image">
+              <button class = "add-field__button"><img src = "/images/image.svg" width = "30" height = "30"><span class = "tooltiptext" >Image upload</span></button>         
+             </form>
+             <form class = "add-field tooltip" method = "POST" action="/form/<%= form._id %>/field">
+              <input type = "hidden" name = "type" value = "pdf">
+              <button class = "add-field__button"><img src = "/images/pdf.svg" width = "30" height = "30"><span class = "tooltiptext" >PDF upload</span></button>         
+             </form>
+
+            </div>
+</div>            
+       <div style = "display: none" class = "auxilary_column">
+          <% var currentIndex = 0 %>
+          <%for(var i = 0;i < populatedFields.length;i++) { %>
+            <% if(populatedFields[i].typeOfInput == "radio"){ %> 
+
+            <form id = "radioform<%= populatedFields[i]._id %>"  method = "GET" action = "/form/<%= form._id %>/radio/<%= populatedFields[i]._id %>">
+             
+            </form>
+            <% currentIndex = i %>
+            <% }else if(populatedFields[i].typeOfInput == "check"){ %>
+              <form id = "checkform<%= populatedFields[i]._id %>"  method = "GET" action = "/form/<%= form._id %>/check/<%= populatedFields[i]._id %>">
+             
+              </form>
+            <% } %>
+          <% } %>  
+      </div>   
+       <div style = "display: none" class = "delete_column">
+        <% for(var i = 0;i < populatedFields.length;i++){ %>
+                <form id = "delete<%= populatedFields[i]._id %>" method = "POST" action = "/field/<%= populatedFields[i]._id %>/delete/<%= form._id %>?_method=delete">
+               
+                </form>
+        <%  } %>
+      </div>
+      
+     
+             
+       <script src="/js/formEditEvents.js"></script>
+    </body>
+</html>

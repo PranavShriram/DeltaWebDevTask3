@@ -1,0 +1,110 @@
+
+
+.form
+{
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    width:40%;
+    margin-left:30%;
+    margin-top: 200px; 
+    -webkit-box-shadow: -1px 3px 21px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 3px 21px 0px rgba(0,0,0,0.75);
+    box-shadow: -1px 3px 21px 0px rgba(0,0,0,0.75);
+}
+
+.form>input:focus
+{
+    outline: 0;
+    border-bottom:2px solid #9b59b6; 
+}
+body
+{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+.form__title
+{
+    font-size: 30px;
+    margin-left: 20px;
+    margin-top: 50px;
+    margin-bottom: 40px;
+    border:none; 
+ 
+}
+
+.form__description
+{
+       border: none;
+       font-size: 24px;
+       margin-left: 20px;
+       margin-bottom: 40px;
+}
+
+.form-choose
+{
+    display: flex;
+    padding-left: 30%;
+    border-bottom:1px solid #ccc; 
+    height: 52px;
+
+}
+.form-choose > form
+{
+    margin-right: 10px;
+}
+.form-choose > form> button
+{
+    border:none;
+    color:rgba(0,0,0,0.5);
+    background-color: white;
+    font-size: 20px;
+    height: 52px;
+    padding-top: 10px;
+}
+
+.form-choose > form:last-child> button
+{
+    color: #9b59b6;
+    border-bottom: 1px solid #9b59b6;
+
+}
+
+.form__text__question
+{
+    border: none;
+        font-size: 20px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.form__text__answer::placeholder
+{
+    color:#ccc;
+}
+.form__text__answer
+{
+    width:40%;
+    height:20px;
+    border:none;
+    font-size: 18px;
+    border-bottom: 1px dashed #eee ;
+    margin-left: 20px;
+    margin-bottom: 40px;
+   
+}
+
+
+.form__button
+{
+    background-color: #9b59b6;
+    color:white;
+    height:40px;
+    font-size: 16px;
+    margin-left: 20px;
+    width:100px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+}

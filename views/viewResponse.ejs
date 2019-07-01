@@ -1,0 +1,140 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/formRender.css">
+    </head>
+    <body>
+            <div class ="navbar">
+                    <div class = "navbar__left">
+        
+                         <div class = "navbar__left__brand" >
+                            <img src = "/images/form.svg" width = "30" height = "30"> 
+                           <div class = "navbar__left__brand__text"> MyForm</div>
+                         </div>
+                    </div>
+                    <div class = "navbar__right">
+                            <!-- <div class = "navbar__right__ele" >
+                               <form action = "/login" method = "GET"><button>Login</button></form>   
+                            </div>
+                            <div class = "navbar__right__ele" >
+                                    <form action = "/register" method = "GET"><button>Register</button></form>   
+                            </div> -->
+                            <div class = "navbar__right__ele" >
+                                    <form action = "/settings/<%= form._id %>" method = "POST"><button>Settings</button></form>   
+                            </div>
+                            <div class = "navbar__right__ele" >
+                                <form action = "/logout" method = "POST"><button>Logout</button></form>   
+                            </div>
+                    </div>
+                </div>
+      
+      <div class = "form">
+            <div class = "form-choose">
+                    <form method = "GET" action = "/form/<%= form._id %>/edit"> 
+                      <button>Questions</button>
+                      </form>
+                  <form method = "GET" action = "/form/<%= form._id %>/viewresponse"> 
+                     <button>Responses</button>
+                   </form>
+            </div> 
+            <div class = "response-tab">
+                <div class = "response-tab__header">
+                    <%= total %> Responses
+                </div>
+               <div class = "toggle-responses">
+              <%  if(parseInt(number) >= 2){ %>
+                
+                    <form action="/form/<%= form._id %>/viewresponse/<%= parseInt(number)-1 %>">
+                           <button><img src = "/images/back.svg" width = "15" height = "15"></button>
+                    </form>
+             <% } %>
+               <div class = "response-tab__number">
+                    <%= number %> of <%= total %>
+                </div>
+            <%  if(parseInt(parseInt(number)+1) <= parseInt(total)){ %>
+            
+                <form action="/form/<%= form._id %>/viewresponse/<%= parseInt(number)+1 %>">
+                    <button><img src = "/images/next.svg" width = "15" height = "15"></button>
+                </form>  
+              <%  } %>
+
+            </div> 
+            <div class = "response-tab__buttonset">
+                <form method="GET" action="/form/<%= form._id %>/viewresponse/1">
+                        <button>Individual</button>
+                </form>
+                <form method="GET" action="/form/<%= form._id %>/analytics">
+                    <button>Analytics</button>
+                </form>
+            </div>
+              
+         </div>
+        <form method = "POST" action="/form/<%= form._id %>/response">
+      
+            <div class = "form__title">
+                    <%= form.title %>
+            </div>
+            <div class = "form__description">
+                    <%= form.description %>
+            </div>
+            <% form.fields.forEach((populatedField) => { %>
+                  
+           
+                     
+                      <%  for(var i = 0;i < responseFields.length;i++){ %>
+                      <%    if(responseFields[i].position == populatedField.position){ %>
+                           <%  if(populatedField.typeOfInput == "text"  ){ %>
+                            <div class = "form__text__question" > <%= populatedField.label %> </div>
+                              <input class = "form__text__answer" value = "<%= responseFields[i].value %>" name = "input<%= populatedField.position %>" disabled>
+                            <%  }else if(populatedField.typeOfInput == "number" ) {%>
+                                <div class = "form__text__question" > <%= populatedField.label %> </div>  
+                             <input class = "form__text__answer" value = "<%= responseFields[i].value %>" name = "input<%= populatedField.position %>" disabled>
+                            <%  }else if(populatedField.typeOfInput == "radio"){ %>
+                                <div class = "form__text__question" > <%= populatedField.label %> </div>
+
+                                <% for(var j = 0;j < populatedField.options.length;j++){ %>
+
+                                   <% if(responseFields[i].value == populatedField.options[j]){ %>
+                                    <div  class ="radio_button_option" > <div style="min-width:300px"><%= populatedField.options[j] %> </div>  <input checked disabled class = "form__text__answer" value = "<%= populatedField.options[j] %>" type = "radio"  name = "input<%= populatedField.position %>" ></div> 
+                                    <% } else { %>
+                                    <div  class ="radio_button_option" > <div style="min-width:300px"><%= populatedField.options[j] %> </div>  <input checked disabled  class = "form__text__answer" value = "<%= populatedField.options[j] %>" type = "radio"  name = "input<%= populatedField.position %>" ></div> 
+                                    <% } %>
+                                  <% } %>
+
+                            <%  }else if(populatedField.typeOfInput == "image"){ %>
+                                <div class = "form__text__question" > <%= populatedField.label %> </div>
+                                 <div>
+                                   <img src = "<%= responseFields[i].url.substr(6,responseFields[i].url.length) %>" width = "50" height = "50">
+                                </div> 
+                            <%  }else if(populatedField.typeOfInput == "pdf"){ %>
+                                <div class = "form__text__question" > <%= populatedField.label %> </div>
+                                 <div>
+                                        <iframe style = "margin-left: 20px;margin-bottom: 50px;" src = "<%= responseFields[i].url.substr(6,responseFields[i].url.length) %>" width = "300" height = "300"></iframe>
+
+                                </div> 
+                            <%  }else if(populatedField.typeOfInput == "check"){  %>
+                                    
+                                <% for(var j = 0;j < populatedField.options.length;j++){ %>
+                                     <% var flag = 0 %> 
+                                    <% for(var k = 0;k < responseFields[i].checkAnswers.length;k++){ %>
+                                            <% if(responseFields[i].checkAnswers[k] == populatedField.options[j]){ %>
+                                                <div  class ="radio_button_option" > <div style="min-width:300px"><%= populatedField.options[j] %> </div>  <input checked disabled class = "form__text__answer" value = "<%= populatedField.options[j] %>" type = "checkbox"  name = "input<%= populatedField.position %>" ></div> 
+                                                <% flag = 1 %>
+                                             <% break %>
+                                            <% } %>
+
+                                    <% } %>
+                                    <% if(flag == 0) {%>
+                                        <div  class ="radio_button_option" > <div style="min-width:300px"><%= populatedField.options[j] %> </div>  <input  disabled class = "form__text__answer" value = "<%= populatedField.options[j] %>" type = "checkbox"  name = "input<%= populatedField.position %>" ></div> 
+                                        <% } %>
+                                <% } %>
+ 
+                                     
+                            <%  } %>
+                          <% } %>
+                     <%  }  %>
+            <%  }) %>
+        </form>
+    </div>  
+      
+    </body>
+</html>

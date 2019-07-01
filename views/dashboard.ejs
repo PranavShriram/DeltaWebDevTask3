@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <!-- <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"> -->
+        <link rel="stylesheet" href="/css/dashboard.css">
+    </head>
+
+    <body>
+        
+        <div class ="navbar">
+            <div class = "navbar__left">
+
+                 <div class = "navbar__left__brand" >
+                    <img src = "/images/form.svg" width = "30" height = "30"> 
+                   <div class = "navbar__left__brand__text"> MyForm</div>
+                 </div>
+            </div>
+            <div class = "navbar__right">
+                    <!-- <div class = "navbar__right__ele" >
+                       <form action = "/login" method = "GET"><button>Login</button></form>   
+                    </div>
+                    <div class = "navbar__right__ele" >
+                            <form action = "/register" method = "GET"><button>Register</button></form>   
+                    </div> -->
+                    <div class = "navbar__right__ele" >
+                        <form action = "/logout" method = "POST"><button>Logout</button></form>   
+                    </div>
+            </div>
+        </div>
+        <div class = "flash-message" role = "alert"> <%= message %> </div>
+
+        <div class = "templates">
+            <div class = "templates__header">
+                Choose you template to get started
+            </div>
+           <div class = "row">
+
+            <div class = "template__blank">
+                <form method = "POST" action = "/form/blank">
+                   <button class = "template__blank__image">
+                       <img src = "/images/add.svg" width = "50" height = "50">
+                   </button>
+                </form>  
+                   <div class = "template__blank__text">
+                        Blank
+                    </div>
+             
+            </div>
+            <div class = "template_contact">
+                    <form method = "POST" action = "/form/contact">
+                        <button class = "template__blank__image">
+                            <img src = "/images/add.svg" width = "50" height = "50">
+                        </button>
+                     </form>  
+                        <div class = "template__blank__text">
+                             Contact Information
+                        </div>
+            </div>
+            <div class = "template_rsvp">
+                    <form method = "POST" action = "/form/rsvp">
+                        <button class = "template__blank__image">
+                            <img src = "/images/add.svg" width = "50" height = "50">
+                        </button>
+                     </form>  
+                        <div class = "template__blank__text">
+                             Event RSVP
+                        </div>
+            </div>
+            <div class = "template_tshirt">
+                    <form method = "POST" action = "/form/tshirt">
+                        <button class = "template__blank__image">
+                            <img src = "/images/add.svg" width = "50" height = "50">
+                        </button>
+                     </form>  
+                        <div class = "template__blank__text">
+                             T-Shirt Sign Up
+                        </div>
+            </div>
+          </div>  
+        </div>
+        <div class = "availableForms__text">
+                Your forms
+        </div>
+        <div class = "availableForms">
+            
+          
+            <% forms.forEach((form) =>{ %>
+              <div class = "availableForms__block"> 
+                <form method = "GET" action = "/form/<%= form._id %>/edit">
+                    <button><img src = "/images/form.svg" width = "150" height = "150"></button> 
+                </form>
+                <div class = "availableForms__block__text">
+                    <%= form.title %>
+                </div>
+              </div>    
+            <% }); %>
+        </div>
+         <form method="GET" action = "/explore">
+            <button class = "my_button">Explore Forms!</button>
+        </form>
+
+        <script>
+                var message = document.querySelector('.flash-message');
+                setTimeout(()=>message.textContent ="",2000);
+        </script>
+        
+    </body>
+</html>

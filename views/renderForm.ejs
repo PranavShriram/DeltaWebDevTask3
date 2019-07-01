@@ -1,0 +1,92 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/formRender.css">
+    </head>
+    <body>
+
+            <div class = "flash-message" role = "alert"> <%= message %> </div>
+
+        <form enctype="multipart/form-data" class = "form" method = "POST" action="/form/<%= form._id %>/response">
+            <div class = "form__title">
+                    <%= form.title %>
+            </div>
+            <div class = "form__description">
+                    <%= form.description %>
+            </div>
+             <input type = "hidden" name =how to make an imput inside one form to submit to another form "questionField" value = "<%= form.fields %>" >
+            <% populatedFields.forEach((populatedField) => { %>
+                  
+                <%  if(populatedField.typeOfInput == "text"){ %>
+                     
+                        <div class = "form__text__question" > <%= populatedField.label %> </div>
+                        <% if(populatedField.required){ %>
+                            <input required class = "form__text__answer" type = "text" placeholder="Enter your answer" name = "input<%= populatedField.position %>" >
+                        <% } else{ %>
+                            <input class = "form__text__answer" type = "text" placeholder="Enter your answer" name = "input<%= populatedField.position %>" >
+                        <% } %>
+                <%  } else if(populatedField.typeOfInput == "number") { %>
+                    <div class = "form__text__question" > <%= populatedField.label %> </div>
+                    <% if(populatedField.required){ %>
+                        <input required class = "form__text__answer" type = "number" placeholder="Enter your answer" name = "input<%= populatedField.position %>" >
+    
+                    <% } else{ %>
+                        <input class = "form__text__answer" type = "number" placeholder="Enter your answer" name = "input<%= populatedField.position %>" >
+
+                    <% } %>
+                <%  } else if(populatedField.typeOfInput == "radio"){ %>
+                    
+                    <div class = "form__text__question" > <%= populatedField.label %> </div>
+                    
+                    <% for(var j = 0;j < populatedField.options.length;j++){ %>
+                        <% if(populatedField.required){ %>   
+                          <div  class ="radio_button_option" > <div style="min-width:300px"><%= populatedField.options[j] %> </div>  <input required  class = "form__text__answer" value = "<%= populatedField.options[j] %>" type = "radio"  name = "input<%= populatedField.position %>" ></div> 
+                        <% } else{ %>
+                          <div  class ="radio_button_option" > <div style="min-width:300px"><%= populatedField.options[j] %> </div>  <input  class = "form__text__answer" value = "<%= populatedField.options[j] %>" type = "radio"  name = "input<%= populatedField.position %>" ></div> 
+                          <% } %>
+                    <% } %>
+                <% } else if(populatedField.typeOfInput == "image"){   %>
+
+                    <% if(populatedField.required){ %>
+                        <div class = "form__text__question" > <%= populatedField.label %> </div>
+
+                        <input style="margin-left: 20px;margin-bottom:30px"  accept="image/*" required type = "file" name = "input<%= populatedField.position %>" id = "photo">   
+    
+                    <% } else{ %>
+                        <div class = "form__text__question" > <%= populatedField.label %> </div>
+
+                        <input style="margin-left: 20px;margin-bottom:30px"  accept="image/*"  type = "file" name = "input<%= populatedField.position %>" id = "photo">   
+
+                    <% } %>
+                <% } else if(populatedField.typeOfInput == "check"){ %>
+                        
+                    <div class = "form__text__question" > <%= populatedField.label %> </div>
+                    
+                    <% for(var j = 0;j < populatedField.options.length;j++){ %>
+                         
+                        <div  class ="radio_button_option" > <div style="min-width:300px"><%= populatedField.options[j] %> </div>  <input  class = "form__text__answer" value = "<%= populatedField.options[j] %>" type = "radio"  name = "input<%= populatedField.position %>" ></div> 
+                        <% } %>
+                    
+
+                <% } else if(populatedField.typeOfInput == "pdf"){   %>
+
+                    <% if(populatedField.required){ %>
+                        <div class = "form__text__question" > <%= populatedField.label %> </div>
+
+                        <input style="margin-left: 20px;margin-bottom:30px"  accept=".pdf" required type = "file" name = "input<%= populatedField.position %>" id = "photo">   
+    
+                    <% } else{ %>
+                        <div class = "form__text__question" > <%= populatedField.label %> </div>
+
+                        <input style="margin-left: 20px;margin-bottom:30px"  accept=".pdf"  type = "file" name = "input<%= populatedField.position %>" id = "photo">   
+
+                    <% } %>
+                  <%  } %>
+            <%  }) %>
+            <button class = "form__button">Submit</button>
+        </form>
+         
+
+        <script src="/js/formEditEvents.js"></script>
+
+    </body>
+</html>

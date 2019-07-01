@@ -1,0 +1,51 @@
+<html>
+    <head> 
+        <link rel="stylesheet" href="/css/settings.css">       
+    </head>
+<body>
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.3"></script>
+        <div class ="navbar">
+                <div class = "navbar__left">
+    
+                     <div class = "navbar__left__brand" >
+                        <img src = "/images/form.svg" width = "30" height = "30"> 
+                       <div class = "navbar__left__brand__text"> MyForm</div>
+                     </div>
+                </div>
+                <div class = "navbar__right">
+                        <div class = "navbar__right__ele" >
+                                <form action = "/form/<%= form._id %>/edit " method = "GET"><button>Back to form</button></form>   
+                        </div>
+                        <div class = "navbar__right__ele" >
+                            <form action = "/logout" method = "POST"><button>Logout</button></form>   
+                        </div>
+                </div>
+            </div>  
+  
+            <div class = "settings">
+                    
+
+                       
+                        <div class = "settings__header">Settings</div>
+                        <form method = "POST" action = "/settings/<%= form._id %>">
+                        <div class = "settings-form-date">Date of Expiry:</div>
+                        <input value = "<%= new Date().toISOString().substr(0, 10) %>" min = "<%= Date.now() %>" type = "date" name = "date">  
+                        <div class = "settings-form-res">Maximum number of responses:</div>
+                        <input min = "0" type = "number"  name = "number">
+                        <div>  <button class = "settings-open-button form__button2">Submit</button></div>
+                        </form> 
+
+                       
+            </div> 
+           <div class = "share">
+               <div class = "share__text">Share!</div>
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-url="https://localhost:3000/form/<%= form._id %>/response" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>  
+            <div class="fb-share-button" data-href="https://localhost:3000/form/<%= form._id %>/response" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+           </div> 
+            <div class = "sidebar-generatedLink">
+                    <div class = "sidebar-generatedLink__text">Link:</div>  
+                    <div class = "sidebar-generatedLink__url" >localhost:3000/form/<%= form._id %>/response</div>
+            </div>
+</body>
+</html>

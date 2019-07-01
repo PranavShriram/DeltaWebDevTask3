@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/viewAnalytics.css">
+    </head>
+    <body>
+            <div class ="navbar">
+                    <div class = "navbar__left">
+        
+                         <div class = "navbar__left__brand" >
+                            <img src = "/images/form.svg" width = "30" height = "30"> 
+                           <div class = "navbar__left__brand__text"> MyForm</div>
+                         </div>
+                    </div>
+                    <div class = "navbar__right">
+                            <div class = "navbar__right__ele" >
+                                    <form action = "/settings/<%= form._id %>" method = "POST"><button>Settings</button></form>   
+                            </div>
+                            <div class = "navbar__right__ele" >
+                                <form action = "/logout" method = "POST"><button>Logout</button></form>   
+                            </div>
+                    </div>
+                </div>
+      <div class="piechart" style="display:none">
+        <div class = "pieChartTotal">
+            <%= form.fields.length %>
+        </div>
+        <%  pieChartData.forEach(p => { %>
+              <div class ="piechart<%= p.position %>">
+               <%=  JSON.stringify(p.arr) %>
+              </div>
+        <% }) %>
+      </div>
+      <div class = "form">
+            <div class = "form-choose">
+                    <form method = "GET" action = "/form/<%= form._id %>/edit"> 
+                      <button>Questions</button>
+                      </form>
+                  <form method = "GET" action = "/form/<%= form._id %>/viewresponse"> 
+                     <button>Responses</button>
+                   </form>
+            </div> 
+            <div class = "response-tab">
+                <div class = "response-tab__header">
+                    <%= foundUser.TotalResponses %> Responses
+                </div>
+            
+            <div class = "response-tab__buttonset">
+                <form method="GET" action="/form/<%= form._id %>/viewresponse/1">
+                        <button>Individual</button>
+                </form>
+                <form method="GET" action="/form/<%= form._id %>/analytics">
+                    <button>Analytics</button>
+                </form>
+            </div>
+              
+         </div>
+        <form method = "POST" action="/form/<%= form._id %>/response">
+      
+
+            <% for(var i = 0;i < form.fields.length;i++){ %>
+              <% if(form.fields[i].typeOfInput != "image" && form.fields[i].typeOfInput != "check" && form.fields[i].typeOfInput != "check"){ %>
+                <div class = "question">
+                  <%=  form.fields[i].label %>
+                </div>
+                <% for(j = 0;j < analytics.length;j++){ %>
+             
+                    <%  if(analytics[j].position == form.fields[i].position){ %>
+                         <%  for(k = 0;k < analytics[j].arr.length;k++){ %>
+                                <div class ="answer">
+                                   <%= analytics[j].arr[k].value %>
+                                </div>
+                          <% } %>
+                    <%  } %>
+                <% } %>
+                <div>
+                 <canvas width = "728" height = "400" id = "canvas<%= form.fields[i].position %>"></canvas>
+                </div>
+                <hr class = "rule">
+            <% } %>
+          <%  } %>
+        </form>
+    </div>  
+      <script src = "/js/pieChart.js"></script>
+      <script src = "/js/viewAnalyticsEvents.js"></script>
+    </body>
+</html>
