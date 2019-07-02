@@ -149,11 +149,17 @@ body
     color: #9b59b6;
     border-bottom: 1px solid #9b59b6;
 }
-.form-choose > form:last-child> button
+.notification__button
 {
-  
-
+    background-color: #9b59b6;
+    color:white;
+    border-radius:5px;
+    padding: 5px;
+    margin-left: 50px;
+    margin-top: 30px; 
+    border-bottom: 1px solid #9b59b6;
 }
+
 
 .sidebar-generatedLink
 {
@@ -372,7 +378,19 @@ input:focus
     .disp_row{
         display: flex;
         flex-direction: row;
-        margin-left: 30%;
+        margin-left: 20%;
+
+    }
+    .notifications
+    {  
+        min-width: 280px;
+        margin-top: 200px;
+        margin-right: 100px;
+        -webkit-box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+       -moz-box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+       box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+       align-self: flex-start;
+       padding: 30px; 
 
     }
     .row2
@@ -420,6 +438,15 @@ input:focus
   .tooltip:hover .tooltiptext {
     visibility: visible;
   }
+  .notifications__header
+  {
+      font-size: 20px;
+      margin-bottom: 10px;
+  }
+  .notifications__text
+  {
+      margin-bottom: 5px;
+  }
 
 @media only screen and (max-width:1300px){
     .disp_row{
@@ -434,7 +461,7 @@ input:focus
     {
         order:1;
     }
-    .settings
+    .notifications
     {
         order: 3;
     }
@@ -444,6 +471,7 @@ input:focus
         justify-content: space-between;
         width:90%;
     }
+  
     .row
    {
     display: flex;
@@ -453,8 +481,20 @@ input:focus
    .form-sticky
   {  
     margin-top: 30px;
-    margin-left: 30%;
+    margin-left: 10%;
     display: flex;
+   }
+   .notifications
+   {  
+       min-width: 280px;
+       margin-top: 100px;
+
+       -webkit-box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+      -moz-box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+      box-shadow: 0px 2px 16px -1px rgba(0,0,0,0.75);
+      align-self: flex-start;
+      padding: 30px; 
+
    }
 }
 

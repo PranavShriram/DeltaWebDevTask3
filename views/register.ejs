@@ -13,16 +13,19 @@
             </ul>
        </div>
        <div class = "flash-message" role = "alert"> <%= message %> </div>
-
+           
+          
             <div class="session">
               <div class="left">   
                  <img src="/images/Login.png" height = "400" width = "400">
               </div>
               <form method = "POST" action = "/register" class="log-in" autocomplete="off"> 
                 <h4>Register</h4>
-               
+                <div id = "userStatus" style = "margin-left:10px;font-size: 12px" >
+                  
+                </div> 
                 <div class="floating-label">
-                  <input placeholder="Username" type="text" name="username" autocomplete="off">
+                  <input onkeyup = "onKeyDownListener()" placeholder="Username" type="text" name="username" class = "userInput" autocomplete="off">
                   <label for="email">Username:</label>
                   <div class="icon">
           <?xml version="1.0" encoding="UTF-8"?>
@@ -60,6 +63,35 @@
                 <button>Register</button>
               </form>
             </div>
+            <div class = "usernameArr" style = "display: none">
+              <%= JSON.stringify(username) %>
+            </div>
             <script src = "/js/login.js"></script>
+            <script>
+              var input = document.querySelector('.userInput');
+              console.log(input)
+              var message = document.querySelector('#userStatus');
+              console.log(message)
+              var arr = JSON.parse(document.querySelector('.usernameArr').textContent);
+              console.log(arr);
+                  function onKeyDownListener()
+                  {     var flag = 0;
+                       for(var i = 0;i < arr.length;i++)
+                       {
+                          if(arr[i] == input.value)
+                          {
+                            flag = 1;
+                            break;
+                          } 
+                       }
+                     if(flag == 0 && input.value != "")
+                      message.textContent = "Username not taken"
+                     else if(flag == 1)
+                      message.textContent = "Username taken"; 
+                     else if(input.value == "")
+                       message.textContent = "" 
+                     
+                  }
+            </script>
   </body>
 </html>

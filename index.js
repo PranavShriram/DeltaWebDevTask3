@@ -18,7 +18,16 @@ var express = require('express'),
  
 
     mongoose.connect('mongodb://localhost:27017/myForm', {useNewUrlParser: true});
-
+    // mongoose.connect("mongodb+srv://Pranav:password12345@cluster0-veuo1.mongodb.net/test?retryWrites=true&w=majority",{
+    //     useNewUrlParser:true,
+    //     useCreateIndex:true
+    // }).then(() => {
+    //     console.log("Connected");
+    // }).catch(
+    //     err => {
+    //         console.log(err);
+    //     }
+    // )
     app.set("view engine","ejs");    
     
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -544,7 +553,7 @@ async function deleteField(req,res)
 async function updateForm(req,res)
 {
     try {
-        
+         
        var foundForm = await Form.findOneAndUpdate({_id:req.params.id},{$set:{title:req.body.title,description:req.body.description}});
     } catch (error) {
         console.log(err);
@@ -552,7 +561,7 @@ async function updateForm(req,res)
     try {
         // foundForm.title = req.body.title;
         // foundForm.description = req.body.description;
-
+         console.log(req.body);
         for(var i = 0;i < foundForm.fields.length;i++)
         {  
            var currentField = await Field.findOne({_id:foundForm.fields[i]}); 
@@ -593,6 +602,12 @@ async function updateForm(req,res)
              required = false; 
             var updatedField = await Field.findOneAndUpdate({_id:foundForm.fields[i]},{$set:{label:req.body[queryString],required:required}});
            } 
+           else if(currentField.typeOfInput == "check")
+           {
+            var queryString = currentField.position+"label";
+             
+            var updatedField = await Field.findOneAndUpdate({_id:foundForm.fields[i]},{$set:{label:req.body[queryString]}});
+           } 
            else if(currentField.typeOfInput == "image")
            {
             var queryString = currentField.position+"label";
@@ -605,6 +620,100 @@ async function updateForm(req,res)
              required = false; 
             var updatedField = await Field.findOneAndUpdate({_id:foundForm.fields[i]},{$set:{label:req.body[queryString],required:required}});
            }
+           else if(currentField.typeOfInput == "pdf")
+           {
+            var queryString = currentField.position+"label";
+            var required;
+            var queryString1 = "check"+currentField.position;
+            console.log( req.body[queryString1]);
+            if(req.body[queryString1] && req.body[queryString1])
+             required = true;
+            else
+             required = false; 
+            var updatedField = await Field.findOneAndUpdate({_id:foundForm.fields[i]},{$set:{label:req.body[queryString],required:required}});
+           }
+        }
+        if(req.body.add != '')
+        {
+            try
+                {
+                    var foundForm = await Form.findOne({_id:req.params.id});
+                }
+                catch(err)
+                {
+                    console.log(err);
+                }
+                try
+                { 
+                if(req.body.add == "text")
+                { 
+                        var createdField = await Field.create({  
+                            typeOfInput:"text",
+                            label:"Untitled",
+                            position:foundForm.fieldCount+1
+                    });
+                }
+                else if(req.body.add == "number"){
+
+                    var createdField = await Field.create({  
+                        typeOfInput:"number",
+                        label:"Untitled",
+                        position:foundForm.fieldCount+1
+                    });
+                }
+                else if(req.body.add == "radio"){
+                    var arr = [];
+                    arr.push("Fill option here");
+                    var createdField = await Field.create({  
+                        typeOfInput:"radio",
+                        label:"Untitled",
+                        position:foundForm.fieldCount+1,
+                        options:arr
+                    });
+                    console.log(createdField);
+                }
+                else if(req.body.add == "image")
+                {
+                        var createdField = await Field.create({  
+                            typeOfInput:"image",
+                            label:"Untitled",
+                            position:foundForm.fieldCount+1,
+                        });
+                }
+                else if(req.body.add == "check")
+                {
+                    var createdField = await Field.create({  
+                        typeOfInput:"check",
+                        label:"Untitled",
+                        position:foundForm.fieldCount+1,
+                        options:arr
+                    });
+                }
+                else if(req.body.add == "pdf")
+                {
+                    var createdField = await Field.create({  
+                        typeOfInput:"pdf",
+                        label:"Untitled",
+                        position:foundForm.fieldCount+1,
+                    });
+                }
+
+                }
+                catch(err)
+                {
+                    console.log(err);
+                }
+                try
+                {
+                    foundForm.fields.push(createdField);
+                    foundForm.fieldCount += 1;
+                    var savedFoundForm = await foundForm.save();
+                    // res.redirect("/form/"+req.params.id+"/edit")
+                }
+                catch(err)
+                {
+                    console.log(err);
+                }
         }
         res.redirect("/form/"+req.params.id+"/edit")
     } catch (error) {
@@ -638,6 +747,7 @@ async function editRadioButtonOptions(req,res){
 async function updateFormField(req,res){
 
     try {
+        console.log(req.body);
         var currentField = await Field.findOne({_id:req.params.fieldID});
         if(currentField.typeOfInput == "text")
         { 
@@ -778,6 +888,21 @@ async function addRadioButtonOption(req,res)
          console.log(error);
      }
 }
+async function clearNotifications(req,res)
+{
+    try{
+         var foundForm = await Form.findOne({_id:req.params.formid});
+         var arr = [];
+         foundForm.recentSubmissions = [];
+         var savedForm = foundForm.save();
+         res.redirect("/form/"+req.params.formid+"/edit");
+    }
+    catch(err)
+    {
+        console.log(err);
+       
+    }
+}
 async function postFormResponse(req,res)
 {  
     
@@ -888,8 +1013,7 @@ async function postFormResponse(req,res)
                         var answers = [];
                     if(req.body[queryString])
                     {    
-                        console.log("++++++++++++++++++++++++++")
-                        console.log(typeof req.body[queryString])
+                      
                       
                        if(typeof req.body[queryString] == "string")
                        { 
@@ -978,9 +1102,16 @@ async function postFormResponse(req,res)
                     
                     foundUser.form[j].responses.push(createdResponseFieldArray); 
                     foundUser.form[j].TotalResponses  =  foundUser.form[j].TotalResponses+1;
-            
+                    foundForm.recentSubmissions.push(
+                        {
+                            User:req.session.user,
+                            Date:Date.now()
+                        }
+                    )
+                    var savedFoundForm = await foundForm.save();
                     var savedFoundUser = await foundUser.save();
-            
+                    req.flash("info","Form response submitted");
+
                     res.redirect("/form/"+formID+"/response")
                 break;
                 } 
@@ -1003,7 +1134,32 @@ async function postFormResponse(req,res)
   }
    
 }
+async function renderRegister(req,res)
+{
+    try
+    {
+        var allUsers = await User.find({});
+        var username = [];
 
+        for(var i = 0;i < allUsers.length;i++)
+        {
+            username.push(allUsers[i].username);
+        }
+        if(req.session.user && req.session.user != "")
+        {
+            res.redirect("/dashboard");
+        }
+        else
+        {  
+
+           res.render("register",{message:req.flash('info'),username:username});
+        }   
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
+}
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
@@ -1130,42 +1286,51 @@ async function viewResponse(req,res,number)
     })
     
     app.get("/register",(req,res)=>{
-        res.render("register",{message:req.flash('info')});
+       
+        renderRegister(req,res); 
+       
     });   
     
     app.post("/register",(req,res)=>{
           
-        
-        var generatedSaltAndHash = hashSaltPassword(req.body.password);
-        
-        var user = {username:req.body.username,salt:generatedSaltAndHash.salt,hash:generatedSaltAndHash.passwordHash};
        
-        User.find({username:req.body.username},(err,foundUsers) => {
-    
-            if(foundUsers.length > 0)
-            {
-                req.flash("info","Username already taken");
-                res.redirect("/register");
-            }
-            else
-            {
-                User.create(user,(err,userCreated)=>{
-                    if(err)
-                     console.log(err);
+                var generatedSaltAndHash = hashSaltPassword(req.body.password);
+                
+                var user = {username:req.body.username,salt:generatedSaltAndHash.salt,hash:generatedSaltAndHash.passwordHash};
+            
+                User.find({username:req.body.username},(err,foundUsers) => {
+            
+                    if(foundUsers.length > 0)
+                    {
+                        req.flash("info","Username already taken");
+                        res.redirect("/register");
+                    }
                     else
-                    {  
-                        req.session.user = userCreated.username;
-                        res.redirect("/dashboard")
-                    } 
-               });
-            }
-        })
-    
+                    {
+                        User.create(user,(err,userCreated)=>{
+                            if(err)
+                            console.log(err);
+                            else
+                            {  
+                                req.session.user = userCreated.username;
+                                res.redirect("/dashboard")
+                            } 
+                    });
+                    }
+                })
+       
         
     })
     
     app.get("/login",(req,res)=>{
-        res.render("login",{message:req.flash('info')});
+        if(req.session.user && req.session.user != "")
+        {
+            res.redirect("/dashboard");
+        }
+        else
+        {
+          res.render("login",{message:req.flash('info')});
+        }  
     });  
     app.post("/logout",(req,res) => 
     {
@@ -1263,7 +1428,9 @@ app.delete("/field/:id/delete/:formid",checkAuthenticity,(req,res) => {
     console.log("YOU HIT DELETE ROUTE");
     deleteField(req,res);
 });
-
+app.post("/form/:formid/clearNotifs",(req,res) => {
+     clearNotifications(req,res);
+});
 //=========================================================
 //FORM BUILDER RADIO BUTTON ROUTES
 //========================================================= 

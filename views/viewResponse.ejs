@@ -47,9 +47,15 @@
                            <button><img src = "/images/back.svg" width = "15" height = "15"></button>
                     </form>
              <% } %>
+             <% if(total > 0){ %>
                <div class = "response-tab__number">
                     <%= number %> of <%= total %>
                 </div>
+            <%    }else{ %>
+                    <div class = "response-tab__number">
+                        0 of 0
+                    </div>
+            <% } %>
             <%  if(parseInt(parseInt(number)+1) <= parseInt(total)){ %>
             
                 <form action="/form/<%= form._id %>/viewresponse/<%= parseInt(number)+1 %>">
@@ -135,6 +141,11 @@
             <%  }) %>
         </form>
     </div>  
+    <script>
+            var message = document.querySelector('.flash-message');
+            setTimeout(()=>message.textContent ="",2000);
+    </script>
+    
       
     </body>
 </html>

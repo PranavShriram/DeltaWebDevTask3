@@ -16,14 +16,12 @@ var formSchema = new Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Field'
     }],
-    recentSubmissions:
-    {
-        Date:String,
-        number:{
-            type:Number,
-            default:0
+    recentSubmissions:[
+        {
+          User:String,
+          Date:String
         }
-    }
+    ]
 });
 
 var Form = mongoose.model('Form',formSchema);

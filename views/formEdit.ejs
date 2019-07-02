@@ -37,7 +37,18 @@
 <div class = "disp_row"> 
    
              
-   
+   <div class = "notifications">
+     <div class = "notifications__header">
+       Notifications<img width = "20" height="20" src = "/images/notification.svg">
+     </div>
+   <%  for(var i = form.recentSubmissions.length-1;i >= 0;i--){ %>
+        <% var d = new Date(parseInt(form.recentSubmissions[i].Date)) %>
+        <div class = "notifications__text"><%= form.recentSubmissions[i].User %> submitted on <%= d.toString().slice(4,10) %></div>
+   <%  } %>
+      <form method = "POST" action = "/form/<%= form._id %>/clearNotifs">
+           <button class = "notification__button">Clear</button>
+      </form>
+   </div>
    <div class = "form">
         <div class = "form-choose">
             <form method = "GET" action = "/form/<%= form._id %>/edit"> 
@@ -47,7 +58,7 @@
            <button>Responses</button>
            </form>
         </div>  
-        <form  method = "POST" action="/form/<%= form._id %>?_method=PUT">
+        <form id = "mainForm"  method = "POST" action="/form/<%= form._id %>?_method=PUT">
            <div class = "main">
               <input id = "title"   class = "form__title" type = "text" value = "<%= form.title %>" name = "title">
               <input id = "desc"  class = "form__description" type = "text" value = "<%= form.description %>" name = "description">
@@ -210,34 +221,24 @@
             
              
             <%  }) %>
+             <input class = "addInput" type = "hidden" name = "add">
              <button class = "form__button">Confirm Edit</button>
            </form>
    </div>
-           <div class = "form-sticky">
-              <form class = "add-field tooltip" method = "POST" action="/form/<%= form._id %>/field">
-                  <input type = "hidden" name = "type" value = "text">
-                  <button class = "add-field__button"><img src = "/images/paragraph.svg" width = "30" height = "30"><span class = "tooltiptext" >Text field</span></button>         
-              </form>
-              <form class = "add-field tooltip" method = "POST" action="/form/<%= form._id %>/field">
-                <input type = "hidden" name = "type" value = "number">
-                <button class = "add-field__button"><img src = "/images/number.svg" width = "30" height = "30"><span class = "tooltiptext" >Number Field</span></button>         
-             </form>
-             <form class = "add-field tooltip" method = "POST" action="/form/<%= form._id %>/field">
-              <input type = "hidden" name = "type" value = "radio">
-              <button class = "add-field__button "><img src = "/images/radio.svg" width = "30" height = "30"><span class = "tooltiptext" >Radio Button Set</span></button>         
-             </form>
-             <form class = "add-field tooltip" method = "POST" action="/form/<%= form._id %>/field">
-              <input type = "hidden" name = "type" value = "check">
-              <button class = "add-field__button "><img src = "/images/check.svg" width = "30" height = "30"><span class = "tooltiptext" >Check box set</span></button>         
-             </form>
-             <form class = "add-field tooltip" method = "POST" action="/form/<%= form._id %>/field">
-              <input type = "hidden" name = "type" value = "image">
-              <button class = "add-field__button"><img src = "/images/image.svg" width = "30" height = "30"><span class = "tooltiptext" >Image upload</span></button>         
-             </form>
-             <form class = "add-field tooltip" method = "POST" action="/form/<%= form._id %>/field">
-              <input type = "hidden" name = "type" value = "pdf">
-              <button class = "add-field__button"><img src = "/images/pdf.svg" width = "30" height = "30"><span class = "tooltiptext" >PDF upload</span></button>         
-             </form>
+             <div class = "form-sticky">
+                <button onclick="clickEvent(this)" id = "text" class = "add-field__button tooltip"><img src = "/images/paragraph.svg" width = "30" height = "30"><span class = "tooltiptext" >Text field</span></button>         
+              
+                <button onclick="clickEvent(this)" id = "number" class = "add-field__button tooltip"><img src = "/images/number.svg" width = "30" height = "30"><span class = "tooltiptext" >Number Field</span></button>         
+            
+              <button onclick="clickEvent(this)" id = "radio" class = "add-field__button tooltip"><img src = "/images/radio.svg" width = "30" height = "30"><span class = "tooltiptext" >Radio Button Set</span></button>  
+
+            
+              <button onclick="clickEvent(this)" id = "check" class = "add-field__button tooltip"><img src = "/images/check.svg" width = "30" height = "30"><span class = "tooltiptext" >Check box set</span></button>         
+        
+              <button onclick="clickEvent(this)" id = "image" class = "add-field__button tooltip"><img src = "/images/image.svg" width = "30" height = "30"><span class = "tooltiptext" >Image upload</span></button>         
+         
+              <button onclick="clickEvent(this)" id = "pdf" class = "tooltip add-field__button"><img src = "/images/pdf.svg" width = "30" height = "30"><span class = "tooltiptext" >PDF upload</span></button>         
+          
 
             </div>
 </div>            
@@ -266,7 +267,16 @@
       </div>
       
      
-             
+       <script>
+         var mainForm = document.querySelector("#mainForm");
+         var reqInput = document.querySelector('.addInput');
+
+          function clickEvent(e)
+          { 
+            reqInput.value = e.id; 
+            mainForm.submit();
+          }
+       </script>      
        <script src="/js/formEditEvents.js"></script>
     </body>
 </html>
